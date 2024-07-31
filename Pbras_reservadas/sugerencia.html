@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sugerencias de palabras reservadas de C++</title>
+<style>
+  .autocomplete {
+    position: relative;
+    display: inline-block;
+  }
+  .autocomplete-input {
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+  }
+  .autocomplete-list {
+    position: absolute;
+    background-color: #f1f1f1;
+    border: 1px solid #d4d4d4;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 1000;
+    width: 300px;
+  }
+  .autocomplete-list-item {
+    padding: 10px;
+    cursor: pointer;
+  }
+  .autocomplete-list-item:hover {
+    background-color: #e9e9e9;
+  }
+</style>
+</head>
+<body>
+  <div class="autocomplete">
+    <input id="autocomplete-input" class="autocomplete-input" type="text" placeholder="Escribe aquí...">
+    <div id="autocomplete-list" class="autocomplete-list"></div>
+  </div>
+
+  <script>
+    // Lista de palabras reservadas de C++
+    const palabrasReservadas = [
+      "auto", "break", "case", "char", "class", "const", "continue", "default", "do",
+      "double", "else", "enum", "extern", "float", "for", "goto", "if", "int", "long",
+      "namespace", "new", "operator", "private", "protected", "public", "return",
+      "short", "signed", "sizeof", "static", "struct", "switch", "template", "this",
+      "typedef", "union", "unsigned", "using", "void", "volatile", "while"
+    ];
+
+    // Función para obtener sugerencias
+    function autocomplete(input) {
+      const currentInput = input.value.toLowerCase();
+      const suggestions = palabrasReservadas.filter(word =>
+        word.toLowerCase().startsWith(currentInput)
+      );
+
+      const autocompleteList = document.getElementById('autocomplete-list');
+      autocompleteList.innerHTML = '';
+      
+      suggestions.forEach(suggestion => {
+        const listItem = document.createElement('div');
+        listItem.textContent = suggestion;
+        listItem.classList.add('autocomplete-list-item');
+        listItem.addEventListener('click', () => {
+          input.value = suggestion;
+          autocompleteList.innerHTML = '';
+        });
+        autocompleteList.appendChild(listItem);
+      });
+    }
+
+    // Obtener el input y manejar eventos de entrada
+    const inputField = document.getElementById('autocomplete-input');
+    inputField.addEventListener('input', () => {
+      autocomplete(inputField);
+    });
+  </script>
+</body>
+</html>
